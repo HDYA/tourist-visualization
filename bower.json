@@ -1,0 +1,25 @@
+{
+  "name": "tourist-visualization",
+  "description": "visualize tourists inside a spot",
+  "main": "index.js",
+  "authors": [
+    "hdya"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "visualization",
+    "webgl",
+    "mobile"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "*"
+  }
+}

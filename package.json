@@ -1,0 +1,19 @@
+{
+  "name": "tourist-visualization",
+  "version": "0.1.0",
+  "description": "visualize tourists inside a spot",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "visualization",
+    "webgl",
+    "mobile"
+  ],
+  "author": "hdya",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
