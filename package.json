@@ -4,7 +4,7 @@
   "description": "visualize tourists inside a spot",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js"
   },
   "keywords": [
     "visualization",
@@ -14,6 +14,7 @@
   "author": "hdya",
   "license": "ISC",
   "dependencies": {
+    "node-uuid": "^1.4.8",
     "express": "^4.15.2"
   }
 }
