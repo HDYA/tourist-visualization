@@ -33,8 +33,8 @@ app.post('/position', function (req, res) {
     })
 });
 
-/* admin_serviceistrator */
-app.post('/admin_service', function (req, res) {
+/* administrator */
+app.post('/admin', function (req, res) {
     var ret = admin_service.examine_admin(req.body.username, req.body.password);
     if (ret == null) {
         res.status(401).send({
