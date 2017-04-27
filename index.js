@@ -21,21 +21,21 @@ app.get('/token', function (req, res) {
 
 app.post('/token', function (req, res) {
     res.send({
-        token_exist: user_token.validate_token(req.params.token)
+        token_exist: user_token.validate_token(req.body.token)
     })
 });
 
 /* Location */
 app.post('/position', function (req, res) {
-    location_service.registe_location(req.params.token, {
-        latitude: req.params.latitude,
-        longitude: req.params.longitude
+    location_service.registe_location(req.body.token, {
+        latitude: req.body.latitude,
+        longitude: req.body.longitude
     })
 });
 
 /* admin_serviceistrator */
 app.post('/admin_service', function (req, res) {
-    var ret = admin_service.examine_admin(req.params.username, req.params.password);
+    var ret = admin_service.examine_admin(req.body.username, req.body.password);
     if (ret == null) {
         res.status(401).send({
             error: 'invalid login info'
@@ -48,7 +48,7 @@ app.post('/admin_service', function (req, res) {
 })
 
 app.get('/position', function (req, res) {
-    var ret = admin_service.examine_admin_token(req.params.token);
+    var ret = admin_service.examine_admin_token(req.body.token);
     if (ret == null) {
         res.status(401).send({
             error: 'invalid admin_service token'
