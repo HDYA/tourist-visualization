@@ -4,8 +4,25 @@ var token;
 $(function () {
     display = $('.location');
     $('.update').click(updateLocation);
-
-    updateLocation();
+    if (window.localStorage.tvs_user_token != undefined) {
+        token = window.localStorage.tvs_user_token;
+        display.html('Local token loaded');
+        updateLocation();
+    } else {
+        display.html('Requesting user token');
+        $.ajax({
+            url: '/token',
+            method: 'GET'
+        }).success(function (data) {
+            display.html('Token obtained:', data.new_token);
+            window.localStorage.tvs_user_token = data.new_token;
+            token = data.new_token;
+            updateLocation();
+        }).fail(function (err) {
+            alert('Error obtaining user token');
+            alert(JSON.stringify(err));
+        });
+    }
 });
 
 function updateLocation() {
@@ -24,7 +41,7 @@ function watchCallback(position) {
     display.html(JSON.stringify(position));
 
     $.ajax({
-        utl: '/position',
+        url: '/position',
         method: 'POST',
         data: {
             latitude: position.latitude,
@@ -32,7 +49,7 @@ function watchCallback(position) {
             token: token
         }
     }).fail(function (err) {
-        alert('Eror uploading position');
+        alert('Error uploading position');
         alert(JSON.stringify(err));
     });
 }
