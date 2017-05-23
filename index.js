@@ -1,6 +1,11 @@
 var express = require('express');
 var app = new express();
 
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 var admin_service = require('./admin_service.js');
 var user_token = require('./user_token.js');
 var location_service = require('./location.js');
