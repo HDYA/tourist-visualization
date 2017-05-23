@@ -5,9 +5,37 @@
     <meta charset="utf-8" />
     <title></title>
     <script src="../lib/jquery/dist/jquery.min.js" language="javascript"></script>
+
+    <style type="text/css">
+        html,body{margin:0;padding:0;}
+        .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+        .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+
+    <script type="text/javascript" src="javascript/bdmap.js"></script>
     <script src="javascript/location.js" language="javascript"></script>
+    <script src="javascript/mobile.js" language="javascript"></script>
+
+    <link rel="stylesheet" href="styles/mobile.css" type="text/css" />
 </head>
 <body>
+    <div class="shader"></div>
+    <div class="advice_box">
+        <span>您对当前位置有何建议？</span>
+        <textarea rows="10" cols="30" placeholder="您的意见建议"></textarea>
+        <div>提交</div>
+    </div>
+    <div class="weather">
+        <span class="city">上海浦东</span>
+        <img src="http://image.nmc.cn/static2/site/nmc/themes/basic/weather/white/day/8.png" alt="">
+        <span class="highest_temp">25℃</span>
+        <span>/</span>
+        <span class="lowest_temp">19℃</span>
+        <span class="wind">东南风 微风</span>
+    </div>
+    <div class="advice">建议！</div>
+    <div class="map" id="dituContent"></div>
     <div>
         <input type="button" class="update" />
         <div class="location"></div>
