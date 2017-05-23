@@ -1,10 +1,11 @@
 var express = require('express');
 var app = new express();
 
-var admin_service = require('admin_service.js');
-var user_token = require('user_token.js');
-var location_service = require('location.js');
+var admin_service = require('./admin_service.js');
+var user_token = require('./user_token.js');
+var location_service = require('./location.js');
 
+app.use('/lib', express.static('webroot/lib'));
 app.use('/mobile', express.static('webroot/mobile'));
 
 /* Test */

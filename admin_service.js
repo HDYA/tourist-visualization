@@ -11,14 +11,14 @@ function generate_token() {
     return new_token;
 }
 
-module.export.examine_admin = function (uuid, pwd) {
+module.exports.examine_admin = function (uuid, pwd) {
     if (uuid == 'admin_service' && pwd === 'admin_service') {
         return generate_token();
     } else {
         return null;
     }
-}
+};
 
-module.export.examine_admin_token = function (token) {
+module.exports.examine_admin_token = function (token) {
     return (admin_service_tokens[token] != undefined);
-}
+};
