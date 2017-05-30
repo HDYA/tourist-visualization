@@ -60,6 +60,11 @@ function watchCallback(position) {
         alert('Error uploading position');
         alert(JSON.stringify(err));
     });
+
+    window.map.setCenter(new BMap.Point(currentPosition.longitude, currentPosition.latitude));
+    window.map.removeOverlay(currentMarkerOverlay);
+    markerArr[0].point = currentPosition.longitude + '|' + currentPosition.latitude;
+    addMarker();
 }
 
 function watchErr(err) {
