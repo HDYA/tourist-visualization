@@ -33,10 +33,15 @@ app.post('/token', function (req, res) {
 
 /* Location */
 app.post('/position', function (req, res) {
+    console.log(JSON.stringify(req.body));
     location_service.registe_location(req.body.token, {
         latitude: req.body.latitude,
         longitude: req.body.longitude
-    })
+    });
+    res.status(200).send({
+        status: 200,
+        text: 'OK'
+    });
 });
 
 /* administrator */
@@ -51,7 +56,7 @@ app.post('/admin', function (req, res) {
             token: ret
         })
     }
-})
+});
 
 app.get('/position', function (req, res) {
     var ret = admin_service.examine_admin_token(req.body.token);
@@ -64,7 +69,7 @@ app.get('/position', function (req, res) {
             positions: location_service.get_active_visitors()
         })
     }
-})
+});
 
 app.listen(8080, function () {
     console.log('Server started on port 8080');

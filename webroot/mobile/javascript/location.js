@@ -39,18 +39,23 @@ function updateLocation() {
 }
 
 function watchCallback(position) {
-    console.log(JSON.stringify(position));
-    // display.html(JSON.stringify(position));
+    var currentPosition = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        altitude: position.coords.altitude,
+        accuracy: position.coords.accuracy,
+        timestamp: position.timestamp,
+        token: token
+    };
+
+    console.log(JSON.stringify(currentPosition));
+    display.html(JSON.stringify(currentPosition));
 
     $.ajax({
         url: '/position',
         method: 'POST',
         dataType:"json",
-        data: {
-            latitude: position.latitude,
-            longitude: position.longitude,
-            token: token
-        }
+        data: position
     }).fail(function (err) {
         alert('Error uploading position');
         alert(JSON.stringify(err));
@@ -58,5 +63,6 @@ function watchCallback(position) {
 }
 
 function watchErr(err) {
-    display.html(JSON.stringify(err));
+    alert(err.message);
+    display.html('Error: ' + JSON.stringify(err));
 }
