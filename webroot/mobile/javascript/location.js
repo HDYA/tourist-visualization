@@ -14,6 +14,7 @@ $(function () {
             url: '/token',
             method: 'GET',
             success: function (data) {
+                console.log(JSON.stringify(data));
                 display.html('Token obtained:' + data.new_token);
                 window.localStorage.tvs_user_token = data.new_token;
                 token = data.new_token;
@@ -40,10 +41,12 @@ function updateLocation() {
 
 function watchCallback(position) {
     var currentPosition = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        altitude: position.coords.altitude,
-        accuracy: position.coords.accuracy,
+        position: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            altitude: position.coords.altitude,
+            accuracy: position.coords.accuracy,
+        },
         timestamp: position.timestamp,
         token: token
     };
@@ -55,15 +58,15 @@ function watchCallback(position) {
         url: '/position',
         method: 'POST',
         dataType:"json",
-        data: position
+        data: currentPosition
     }).fail(function (err) {
         alert('Error uploading position');
         alert(JSON.stringify(err));
     });
 
-    window.map.setCenter(new BMap.Point(currentPosition.longitude, currentPosition.latitude));
+    window.map.setCenter(new BMap.Point(currentPosition.position.longitude, currentPosition.position.latitude));
     window.map.removeOverlay(currentMarkerOverlay);
-    markerArr[0].point = currentPosition.longitude + '|' + currentPosition.latitude;
+    markerArr[0].point = currentPosition.position.longitude + '|' + currentPosition.position.latitude;
     addMarker();
 }
 

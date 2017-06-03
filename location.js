@@ -1,10 +1,10 @@
 ﻿active_visitors = {};
 
-module.exports.registe_location = function (uuid, location) {
+module.exports.registe_location = function (uuid, position) {
     // TODO record position
     active_visitors[uuid] = {
         'timestamp': Date.now(),
-        'location': location
+        'position': position
     };
 }
 

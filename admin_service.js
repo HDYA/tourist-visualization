@@ -1,18 +1,18 @@
 ﻿const uuid = require('node-uuid');
 
-var admin_service_tokens = {};
+var admin_tokens = {};
 
 function generate_token() {
     var new_token = uuid();
-    while (token_database[new_token] != undefined) {
+    while (admin_tokens[new_token] != undefined) {
         new_token = uuid();
     }
-    admin_service_tokens[new_token] = true;
+    admin_tokens[new_token] = true;
     return new_token;
 }
 
 module.exports.examine_admin = function (uuid, pwd) {
-    if (uuid == 'admin_service' && pwd === 'admin_service') {
+    if (uuid == 'admin' && pwd === 'admin') {
         return generate_token();
     } else {
         return null;
@@ -20,5 +20,5 @@ module.exports.examine_admin = function (uuid, pwd) {
 };
 
 module.exports.examine_admin_token = function (token) {
-    return (admin_service_tokens[token] != undefined);
+    return (admin_tokens[token] != undefined);
 };

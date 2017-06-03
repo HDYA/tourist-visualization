@@ -12,6 +12,7 @@ var location_service = require('./location.js');
 
 app.use('/lib', express.static('webroot/lib'));
 app.use('/mobile', express.static('webroot/mobile'));
+app.use('/monitor', express.static('webroot/visualization'));
 
 /* Test */
 app.get('/test', function (req, res) {
@@ -34,10 +35,7 @@ app.post('/token', function (req, res) {
 /* Location */
 app.post('/position', function (req, res) {
     console.log(JSON.stringify(req.body));
-    location_service.registe_location(req.body.token, {
-        latitude: req.body.latitude,
-        longitude: req.body.longitude
-    });
+    location_service.registe_location(req.body.token, req.body.position);
     res.status(200).send({
         status: 200,
         text: 'OK'
