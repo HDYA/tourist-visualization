@@ -87,3 +87,9 @@
     cursor: pointer;
     margin-top: 15px;
 }
+
+.debug {
+    font-size:x-small;
+    display: inline-block;
+    width: 80%;
+}

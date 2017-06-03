@@ -1,8 +1,9 @@
-﻿var display;
+﻿var display, map;
 var token;
 
 $(function () {
     display = $('.display');
+    display = $('.map');
 
     display.html('Logging in');
     $.ajax({
@@ -21,7 +22,11 @@ $(function () {
             alert('Error obtaining administrator token');
             alert(JSON.stringify(err));
         }
-    })
+    });
+
+    map.width(window.innerWidth);
+    map.height(window.innerHeight);
+
 });
 
 function startQuery() {
