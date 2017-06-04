@@ -1,10 +1,14 @@
-﻿active_visitors = {};
+﻿var storage = require('./storage.js');
 
-module.exports.registe_location = function (uuid, position) {
-    // TODO record position
+active_visitors = {};
+
+module.exports.registe_location = function (uuid, position, timestamp) {
+    if (active_visitors[uuid] != undefined) {
+        storage.add(uuid, active_visitors[uuid].position, active_visitors[uuid].timestamp)
+    }
     active_visitors[uuid] = {
-        'timestamp': Date.now(),
-        'position': position
+        timestamp: timestamp ? timestamp : Date.now(),
+        position: position
     };
 }
 

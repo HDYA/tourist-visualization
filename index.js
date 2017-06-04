@@ -6,6 +6,8 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
+var storage = require('./storage.js');
+
 var admin_service = require('./admin_service.js');
 var user_token = require('./user_token.js');
 var location_service = require('./location.js');
@@ -35,7 +37,7 @@ app.post('/token', function (req, res) {
 /* Location */
 app.post('/position', function (req, res) {
     console.log(JSON.stringify(req.body));
-    location_service.registe_location(req.body.token, req.body.position);
+    location_service.registe_location(req.body.token, req.body.position, req.body.timestamp);
     res.status(200).send({
         status: 200,
         text: 'OK'
