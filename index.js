@@ -11,6 +11,7 @@ var storage = require('./storage.js');
 var admin_service = require('./admin_service.js');
 var user_token = require('./user_token.js');
 var location_service = require('./location.js');
+var analysis_service = require('./analysis_service.js');
 
 app.use('/lib', express.static('webroot/lib'));
 app.use('/mobile', express.static('webroot/mobile'));
@@ -67,6 +68,20 @@ app.get('/position', function (req, res) {
     } else {
         res.send({
             positions: location_service.get_active_visitors()
+        })
+    }
+});
+
+/* Analysis */
+app.get('/analysis', function(req, res) {
+    var ret = admin_service.examine_admin_token(req.body.token);
+    if (ret == null) {
+        res.status(401).send({
+            error: 'invalid admin_service token'
+        })
+    } else {
+        res.send({
+            analysis: analysis_service.analysisSlowPoints(storage.get())
         })
     }
 });
