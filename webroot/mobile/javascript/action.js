@@ -56,10 +56,8 @@ function updateDisplay() {
     )
 }
 
-var azEps = 0.5;
-var betaEps = 0.3;
-
-var pi = 3.141592654;
+var azEps = 0.3;
+var betaEps = 0.15;
 
 var photographingDetected = false;
 var photographingTimestamp = 0;
@@ -73,8 +71,8 @@ function detectPhotographing() {
         return;
     }
 
-    var arcb = beta / 180 * pi;
-    var arcg = gamma / 180 * pi;
+    var arcb = beta / 180 * Math.PI;
+    var arcg = gamma / 180 * Math.PI;
 
     var cosb = Math.cos(arcb);
     var sinb = Math.sin(arcb);
