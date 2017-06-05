@@ -32,12 +32,12 @@ $(function () {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-    camera.position.set(0, cameraHeight, 0);
+    camera.position.set(50, cameraHeight, 50);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     var groundGeometry = new THREE.PlaneGeometry(1200, 1200, 1, 1);
     ground = new THREE.Mesh(groundGeometry, new THREE.MeshLambertMaterial({
-        color: 0x000000
+        color: 0xffffff
     }));
     ground.position.y = -10;
     ground.rotation.x = - Math.PI / 2;
@@ -64,9 +64,16 @@ $(function () {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    var render = function () {
-        requestAnimationFrame(render);
+    var trackballControls = new THREE.TrackballControls(camera, renderer.domElement);
+    trackballControls.rotateSpeed = 1.0;
+    trackballControls.zoomSpeed = 1.0;
+    trackballControls.panSpeed = 1.0;
+    trackballControls.noZoom = false;
 
+    var render = function () {
+        trackballControls.update();
+
+        requestAnimationFrame(render);
         renderer.render(scene, camera);
     };
 
