@@ -1,7 +1,7 @@
 ﻿var display, map;
 var token;
 
-var camera;
+var scene, camera;
 var visitors = {};
 
 $(function () {
@@ -26,7 +26,7 @@ $(function () {
         }
     });
 
-    var scene = new THREE.Scene();
+    scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
     var renderer = new THREE.WebGLRenderer();
@@ -49,13 +49,21 @@ function converter(position) {
     position.longitude *= 60 * 1852 * Math.cos(position.latitude / 180 * 3.141592654);
 }
 
+function getRandomColor() {
+    return '0x' +
+        (function (color) {
+            return (color += '' + (Math.floor(Math.random() * 255)).toString(16))
+                && (color.length == 6) ? color : arguments.callee(color);
+        })('');
+}
+
 function addVisitor(uuid, position) {
     if (visitors[uuid] != undefined) {
         return;
     }
     converter(position);
     var geometry = new THREE.BoxGeometry(position.longitude, position.latitude, position.altitude);
-    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    var material = new THREE.MeshBasicMaterial({ color: getRandomColor() });
     var cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
@@ -86,13 +94,13 @@ function startQuery() {
                 var count = 0;
                 var longitudeCenter = 0.0;
                 var latitudeCenter = 0.0;
-                
+
                 for (var uuid in data.positions) {
                     dis = dis.concat(uuid).concat('<br>')
                         .concat('\t').concat(JSON.stringify(data.positions[uuid].position)).concat('<br>')
                         .concat('\t').concat(data.positions[uuid].timestamp).concat('<br>')
                         .concat('<br>');
-                    
+
                     if (visitors[uuid] == undefined) {
                         addVisitor(uuid, data.positions[uuid].position);
                     } else {
