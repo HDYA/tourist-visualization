@@ -8,10 +8,10 @@
 var $motion;
 var alpha, beta, gamma, ax, ay, az, alphaRate, betaRate, gammaRate;
 
-$(function() {
+$(function () {
     $motion = $('.motion');
 
-    $(window).on('deviceorientation', function(e) {
+    $(window).on('deviceorientation', function (e) {
         var o = e.originalEvent;
 
         alpha = o.alpha;
@@ -21,7 +21,7 @@ $(function() {
         updateDisplay();
     });
 
-    $(window).on('devicemotion', function(e) {
+    $(window).on('devicemotion', function (e) {
         var m = e.originalEvent;
 
         ax = m.acceleration.x;
@@ -67,7 +67,7 @@ var photographingTimeEps = 2000;
 var photographingSent = false;
 
 function detectPhotographing() {
-    if(Math.sqrt(ax * ax + ay * ay + az * az) > azEps) {
+    if (Math.sqrt(ax * ax + ay * ay + az * az) > azEps) {
         photographingDetected = false;
         photographingSent = false;
         return;
@@ -81,13 +81,16 @@ function detectPhotographing() {
     var cosg = Math.cos(arcg);
     var sing = Math.sin(arcg);
 
-    if(Math.abs(cosb) <= betaEps) {
+    if (Math.abs(cosb) <= betaEps) {
         if (photographingDetected) {
             if (Date.now() - photographingTimestamp >= photographingTimeEps) {
                 if (photographingSent) {
                     return;
                 } else {
-                    sendAction();
+                    sendAction({
+                        id: 0,
+                        description: 'photographing'
+                    });
                     photographingSent = true;
                 }
             }
@@ -101,6 +104,20 @@ function detectPhotographing() {
     }
 }
 
-function sendAction() {
-    alert('detected!');
+function sendAction(action) {
+    $.ajax({
+        url: '/action',
+        method: 'POST',
+        data: {
+            token: token,
+            position: currentPosition.position,
+            action: action,
+            timestamp: Date.now()
+        },
+        error: function (err) {
+            console.error('Error uploading user action');
+            console.error(JSON.stringify(err));
+        }
+    });
+    alert('action detected!');
 }

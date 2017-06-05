@@ -1,21 +1,23 @@
-﻿var display;
+﻿var $display;
+
 var token;
+var currentPosition;
 
 $(function () {
-    display = $('.location');
+    $display = $('.location');
     $('.update').click(updateLocation);
     if (window.localStorage.tvs_user_token != undefined) {
         token = window.localStorage.tvs_user_token;
-        display.html('Local token loaded');
+        $display.html('Local token loaded');
         updateLocation();
     } else {
-        display.html('Requesting user token');
+        $display.html('Requesting user token');
         $.ajax({
             url: '/token',
             method: 'GET',
             success: function (data) {
                 console.log(JSON.stringify(data));
-                display.html('Token obtained:' + data.new_token);
+                $display.html('Token obtained:' + data.new_token);
                 window.localStorage.tvs_user_token = data.new_token;
                 token = data.new_token;
                 updateLocation();
@@ -40,7 +42,7 @@ function updateLocation() {
 }
 
 function watchCallback(position) {
-    var currentPosition = {
+    currentPosition = {
         position: {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -52,16 +54,17 @@ function watchCallback(position) {
     };
 
     console.log(JSON.stringify(currentPosition));
-    display.html(JSON.stringify(currentPosition));
+    $display.html(JSON.stringify(currentPosition));
 
     $.ajax({
         url: '/position',
         method: 'POST',
-        dataType:"json",
-        data: currentPosition
-    }).fail(function (err) {
-        alert('Error uploading position');
-        alert(JSON.stringify(err));
+        dataType: "json",
+        data: currentPosition,
+        error: function (err) {
+            alert('Error uploading position');
+            alert(JSON.stringify(err));
+        }
     });
 
     window.map.setCenter(new BMap.Point(currentPosition.position.longitude, currentPosition.position.latitude));
@@ -72,5 +75,5 @@ function watchCallback(position) {
 
 function watchErr(err) {
     alert(err.message);
-    display.html('Error: ' + JSON.stringify(err));
+    $display.html('Error: ' + JSON.stringify(err));
 }
