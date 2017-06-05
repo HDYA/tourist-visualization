@@ -4,7 +4,7 @@ active_visitors = {};
 
 module.exports.registe_location = function (uuid, position, timestamp) {
     if (active_visitors[uuid] != undefined) {
-        storage.add(uuid, active_visitors[uuid].position, active_visitors[uuid].timestamp)
+        storage.add_position_record(uuid, active_visitors[uuid].position, active_visitors[uuid].timestamp)
     }
     active_visitors[uuid] = {
         timestamp: timestamp ? timestamp : Date.now(),

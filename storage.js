@@ -1,19 +1,19 @@
-storage = {};
+positionStorage = {};
 
-module.exports.add = function(uuid, position, timestamp) {
-    if (storage[uuid]) {
-        storage[uuid].push({
+module.exports.add_position_record = function (uuid, position, timestamp) {
+    if (positionStorage[uuid]) {
+        positionStorage[uuid].push({
             'timestamp': timestamp ? timestamp : Date.now(),
             'position': position
         });
     } else {
-        storage[uuid] = [{
+        positionStorage[uuid] = [{
             'timestamp': timestamp ? timestamp : Date.now(),
             'position': position
         }];
     }
 };
 
-module.exports.get = function() {
-    return storage;
+module.exports.get_position_record = function () {
+    return positionStorage;
 }

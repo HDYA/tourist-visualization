@@ -81,7 +81,7 @@ app.get('/analysis', function(req, res) {
         })
     } else {
         res.send({
-            analysis: analysis_service.analysisSlowPoints(storage.get())
+            analysis: analysis_service.analysisSlowPoints(storage.get_position_record())
         })
     }
 });
