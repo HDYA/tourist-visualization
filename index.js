@@ -11,6 +11,7 @@ var storage = require('./storage.js');
 var admin_service = require('./admin_service.js');
 var user_token = require('./user_token.js');
 var location_service = require('./location.js');
+var action_service = require('./action_service.js');
 var analysis_service = require('./analysis_service.js');
 
 app.use('/lib', express.static('webroot/lib'));
@@ -45,6 +46,16 @@ app.post('/position', function (req, res) {
     });
 });
 
+/* Action */
+app.post('/action', function(req,res) {
+    console.log(JSON.stringify(req.body));
+    action_service.register_action(req.body.token, req.body.action, req.body.position, req.body.timestamp);
+    res.status(200).send({
+        status: 200,
+        text: 'OK'
+    });
+});
+
 /* administrator */
 app.post('/admin', function (req, res) {
     var ret = admin_service.examine_admin(req.body.username, req.body.password);
@@ -68,6 +79,19 @@ app.get('/position', function (req, res) {
     } else {
         res.send({
             positions: location_service.get_active_visitors()
+        })
+    }
+});
+
+app.get('/action', function (req, res) {
+    var ret = admin_service.examine_admin_token(req.body.token);
+    if (ret == null) {
+        res.status(401).send({
+            error: 'invalid admin_service token'
+        })
+    } else {
+        res.send({
+            actions: action_service.get_action()
         })
     }
 });
