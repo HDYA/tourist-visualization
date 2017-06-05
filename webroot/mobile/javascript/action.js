@@ -42,7 +42,7 @@ function updateDisplay() {
         .concat('Alpha: ').concat(alpha).concat('<br>')
         .concat('Beta: ').concat(beta).concat('<br>')
         .concat('Gamma: ').concat(gamma).concat('<br>')
-        .concat('Cosine Beta: ').concat(Math.abs(Math.cos(beta / 180 * pi))).concat('<br>')
+        .concat('Cosine Beta: ').concat(Math.abs(Math.cos(beta / 180 * Math.PI))).concat('<br>')
         .concat('Acceleration X: ').concat(ax).concat('<br>')
         .concat('Acceleration Y: ').concat(ay).concat('<br>')
         .concat('Acceleration Z: ').concat(az).concat('<br>')
